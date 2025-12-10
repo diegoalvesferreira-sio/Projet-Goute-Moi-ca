@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('_administrateur', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_utilisateur')->unique();
+            $table->string('email')->unique();
+            $table->string('mdp');
             $table->timestamps();
         });
     }
