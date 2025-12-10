@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_visite', function (Blueprint $table) {
+        Schema::create('visites', function (Blueprint $table) {
             $table->id();
-            $table->date('date_visite');
+             $table->date('date_visite');
             $table->date('date_publication')->nullable();
             $table->text('commentaire')->nullable();
-            $table->foreignId('critique_id')->constrained('critiques')->cascadeOnDelete();
-            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
+            $table->unsignedBigInteger('critique_id');
+            $table->unsignedBigInteger('restaurant_id');
+            $table->foreign('critique_id')->references('id')->on('critiques')->onDelete('cascade');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_viste');
+        Schema::dropIfExists('visites');
     }
 };

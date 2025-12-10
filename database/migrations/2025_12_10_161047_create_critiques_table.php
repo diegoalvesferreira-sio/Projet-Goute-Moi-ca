@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_statut', function (Blueprint $table) {
+        Schema::create('critiques', function (Blueprint $table) {
             $table->id();
-            $table->string('type_statut');
+             $table->string('nom', 100);
+            $table->string('email', 100)->unique();
+            $table->string('mpd', 100);
+            $table->unsignedBigInteger('statut_id');
+            $table->foreign('statut_id')->references('id')->on('statuts')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_statut');
+        Schema::dropIfExists('critiques');
     }
 };
