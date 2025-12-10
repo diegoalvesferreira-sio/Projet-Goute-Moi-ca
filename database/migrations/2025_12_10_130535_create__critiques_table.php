@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('_critiques', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_utilisateur');
+            $table->string('nom');
             $table->string('email')->unique();
             $table->string('mdp');
             $table->foreignId('statut_id')->constrained('statuts')->cascadeOnDelete();
