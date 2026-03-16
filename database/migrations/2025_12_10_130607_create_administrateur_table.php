@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_critiques', function (Blueprint $table) {
+        Schema::create('administrateur', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_utilisateur');
+            $table->string('nom_utilisateur')->unique();
             $table->string('email')->unique();
             $table->string('mdp');
-            $table->foreignId('statut_id')->constrained('statuts')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_critiques');
+        Schema::dropIfExists('administrateur');
     }
 };
