@@ -6,26 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('critiques', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_utilisateur');
             $table->string('email')->unique();
             $table->string('mdp');
-            $table->foreignId('statut_id')->constrained('statut')->cascadeOnDelete();
+            $table->enum('role', ['critiques', 'administrateur'])->default('critiques');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('critiques');
+        Schema::dropIfExists('users');
     }
 };

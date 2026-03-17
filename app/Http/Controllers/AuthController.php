@@ -16,10 +16,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'email'    => 'required|email',
-            'password' => 'required|min:6'
+            'mdp' => 'required|min:6'
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'mdp'))) {
             return back()->withErrors(['email' => 'Email ou mot de passe incorrect']);
         }
 
