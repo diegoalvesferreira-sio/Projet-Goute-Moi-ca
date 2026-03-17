@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('statut', function (Blueprint $table) {
             $table->id();
-            $table->string('type_statut');
+             $table->string('libelle');
             $table->timestamps();
         });
     }
@@ -24,5 +24,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('statut');
-    }
+}
 };
