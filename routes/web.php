@@ -7,9 +7,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/espaceclient', function(){
-    return view('Compte');
-});
+Route::get('critique/dashboard/{id}', [AuthController::class, 'dashboardCritique']);
+
+Route::get('/admin/dashboard/{id}', [AuthController::class, 'dashboardAdmin']);
 
 Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
