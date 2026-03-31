@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="/css/style.css">
     <title>Restaurants</title>
 </head>
 <body>
@@ -11,6 +12,8 @@
             <p>{{ $restaurant->nom }}</p>
             <p>{{ $restaurant->adresse }}</p>
             <p>{{ $restaurant->description }}</p>
+            <p>Score moyen : {{ $scores[$restaurant->id] }} / 10</p>
+            <a href="{{ route('restaurants.visites.index', $restaurant->id) }}">Voir les visites</a>
         </div>
     @endforeach
 </body>

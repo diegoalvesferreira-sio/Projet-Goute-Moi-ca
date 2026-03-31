@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Restaurants;
+use App\Models\Visite;
+use App\Models\Evaluer;
 
 class RestaurantsController extends Controller
 {
@@ -13,7 +15,12 @@ class RestaurantsController extends Controller
     public function index()
     {
         $restaurants = Restaurants::all();
-        return view('Resto', compact('restaurants'));
+        $scores = [];
+        foreach ($restaurants as $restaurant) {
+        $visiteIds = Visite::where('restaurant_id', $restaurant->id)->pluck('id');
+        $scores[$restaurant->id] = round(Evaluer::whereIn('visite_id', $visiteIds)->avg('note') ?? 0, 2);
+        }
+        return view('Resto', compact('restaurants','scores'));
     }
 
     /**
