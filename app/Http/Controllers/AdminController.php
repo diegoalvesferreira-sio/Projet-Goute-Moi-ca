@@ -11,7 +11,6 @@ class AdminController extends Controller
     // Afficher la liste des critiques
     public function listeCritiques()
     {
-        // Vérifier que c'est bien un admin connecté
         if (!Auth::guard('admin')->check()) {
             return redirect('/login');
         }
@@ -31,6 +30,21 @@ class AdminController extends Controller
 
         Critique::findOrFail($id)->delete();
 
-        return redirect('/admin/critiques')->with('success', 'Critique supprimé !');
+        return redirect('/admin/gestion-critiques')->with('success', 'Critique supprimé !');
+    }
+
+    // Changer le statut d'un critique
+    public function changerStatut($id)
+    {
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/login');
+        }
+
+        $critique = Critique::findOrFail($id);
+
+        $critique->statut_id = $critique->statut_id == 1 ? 2 : 1;
+        $critique->save();
+
+        return redirect('/admin/gestion-critiques')->with('success', 'Statut modifié !');
     }
 }

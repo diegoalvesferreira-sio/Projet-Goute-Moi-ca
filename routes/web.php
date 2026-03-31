@@ -53,3 +53,4 @@ Route::get('/register',  [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/admin/gestion-critiques', [AdminController::class, 'listeCritiques']);
 Route::delete('/admin/gestion-critiques/{id}', [AdminController::class, 'supprimerCritique']);
+Route::patch('/admin/gestion-critiques/{id}/statut', [AdminController::class, 'changerStatut']);

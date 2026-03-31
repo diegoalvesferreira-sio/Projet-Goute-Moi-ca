@@ -22,7 +22,8 @@
                 <th>Nom</th>
                 <th>Email</th>
                 <th>Statut</th>
-                <th>Action</th>
+                <th>Changer statut</th>
+                <th>Supprimer</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,15 @@
                 <td>{{ $critique->nom_utilisateur }}</td>
                 <td>{{ $critique->email }}</td>
                 <td>{{ $critique->statut->libelle }}</td>
+                <td>
+                    <form method="POST" action="/admin/gestion-critiques/{{ $critique->id }}/statut">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit">
+                            {{ $critique->statut_id == 1 ? 'Passer bénévole' : 'Passer affilié' }}
+                        </button>
+                    </form>
+                </td>
                 <td>
                     <form method="POST" action="/admin/gestion-critiques/{{ $critique->id }}">
                         @csrf
