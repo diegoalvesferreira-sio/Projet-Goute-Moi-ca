@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\VisiteController;
+use App\Http\Controllers\RestaurantsController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\RestaurantsController;
+
 Route::get('/restaurants', [RestaurantsController::class, 'index']);
 Route::get('/restaurants/ajout', [RestaurantsController::class, 'create']);
 Route::post('/restaurants', [RestaurantsController::class, 'store']);
@@ -16,7 +17,7 @@ Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit']);
 Route::put('/restaurants/{id}', [RestaurantsController::class, 'update']);
 Route::delete('/restaurants/{id}', [RestaurantsController::class, 'destroy']);
 
-use App\Http\Controllers\VisiteController;
+
 Route::get('/restaurants/{restaurant}/visites', [VisiteController::class, 'index'])->name('restaurants.visites.index');
 Route::get('/restaurants/{restaurant}/visites/ajouter', [VisiteController::class, 'create'])->name('restaurants.visites.create');
 Route::post('/restaurants/{restaurant}/visites', [VisiteController::class, 'store'])->name('restaurants.visites.store');
@@ -25,7 +26,6 @@ Route::get('/visites/{visite}/edit', [VisiteController::class, 'edit'])->name('v
 Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visites.update');
 Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
 
-use App\Http\Controllers\RestaurantsController;
 Route::get('/restaurants', [RestaurantsController::class, 'index']);
 Route::get('/restaurants/ajout', [RestaurantsController::class, 'create']);
 Route::post('/restaurants', [RestaurantsController::class, 'store']);
@@ -33,7 +33,6 @@ Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit']);
 Route::put('/restaurants/{id}', [RestaurantsController::class, 'update']);
 Route::delete('/restaurants/{id}', [RestaurantsController::class, 'destroy']);
 
-use App\Http\Controllers\VisiteController;
 Route::get('/restaurants/{restaurant}/visites', [VisiteController::class, 'index'])->name('restaurants.visites.index');
 Route::get('/restaurants/{restaurant}/visites/ajouter', [VisiteController::class, 'create'])->name('restaurants.visites.create');
 Route::post('/restaurants/{restaurant}/visites', [VisiteController::class, 'store'])->name('restaurants.visites.store');
