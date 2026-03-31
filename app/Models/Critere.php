@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Critere extends Model
 {
+    protected $table = 'critere';
     protected $fillable = [
         'libelle'
     ];

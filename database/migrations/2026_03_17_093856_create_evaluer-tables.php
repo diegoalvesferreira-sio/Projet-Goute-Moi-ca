@@ -16,8 +16,8 @@ return new class extends Migration
     $table->unsignedBigInteger('visite_id');
     $table->unsignedBigInteger('critere_id');
     $table->integer('note');
-    $table->foreign('visite_id')->references('id')->on('visites')->onDelete('cascade');
-    $table->foreign('critere_id')->references('id')->on('criteres')->onDelete('cascade');
+    $table->foreign('visite_id')->references('id')->on('visite')->onDelete('cascade');
+    $table->foreign('critere_id')->references('id')->on('critere')->onDelete('cascade');
     $table->timestamps();
 });
     }

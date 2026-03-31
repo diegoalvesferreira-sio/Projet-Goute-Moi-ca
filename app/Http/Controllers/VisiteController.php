@@ -57,7 +57,7 @@ class Visitecontroller extends Controller
         ]);
         DB::transaction(function () use ($request, $restaurant) {
             $visite = Visite::create([
-                'critique_id'      =>3,
+                'critique_id'      => Auth::guard('web')->id(),
                 'restaurant_id'    => $restaurant->id,
                 'date_visite'      => $request->date_visite,
                 'date_publication' => now(),

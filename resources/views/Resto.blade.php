@@ -10,7 +10,7 @@
     @foreach($restaurants as $restaurant)
         <div>
             <p>{{ $restaurant->nom }}</p>
-            <p>{{ $restaurant->adresse }}</p>
+            <p>{{ $restaurant->localisation }}</p>
             <p>{{ $restaurant->description }}</p>
             <p>Score moyen : {{ $scores[$restaurant->id] }} / 10</p>
             <a href="{{ route('restaurants.visites.index', $restaurant->id) }}">Voir les visites</a>

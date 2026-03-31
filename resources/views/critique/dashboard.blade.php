@@ -13,6 +13,7 @@
     <form method="POST" action="/logout">
         @csrf
         <button type="submit">Se déconnecter</button>
+        <a href="{{ route('liste.restaurants') }}">Voir les Restaurants</a>
     </form>
 
 </body>

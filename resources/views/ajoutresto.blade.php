@@ -7,7 +7,7 @@
         <form method="post" action="/restaurants">
             @csrf
             <input type="text" name="nom" placeholder="nom">
-            <input type="text" name="adresse" placeholder="adresse">
+            <input type="text" name="localisation" placeholder="localisation">
             <input type="text" name="description" placeholder="description">
             <button type="submit">enregistrer</button>
         </form>

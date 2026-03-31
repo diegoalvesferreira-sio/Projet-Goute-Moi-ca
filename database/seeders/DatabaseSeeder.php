@@ -20,13 +20,6 @@ class DatabaseSeeder extends Seeder
     {
         $statut = Statut::create(['libelle' => 'salarié']);
 
-        Critique::create([
-            'nom'  => 'diego',
-            'email'     => 'diego@test.com',
-            'mpd'       => bcrypt('password'),
-            'statut_id' => $statut->id,
-        ]);
-
         Critere::create(['libelle' => 'Cuisine']);
         Critere::create(['libelle' => 'Service']);
         Critere::create(['libelle' => 'Ambiance']);

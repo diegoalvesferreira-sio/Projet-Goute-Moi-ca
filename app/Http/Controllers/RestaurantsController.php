@@ -38,7 +38,7 @@ class RestaurantsController extends Controller
     {
         $request->validate([
             'nom' => 'required',
-            'adresse'=> 'required',
+            'localisation'=> 'required',
             'description'=> 'required'
         ]);
         Restaurants::create($request->all());

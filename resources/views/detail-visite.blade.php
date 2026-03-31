@@ -5,7 +5,6 @@
     </head>
     <body>
         <h1>Visite du {{ $visite->date_visite }}</h1>
-
         <p>Commentaire : {{ $visite->commentaire }}</p>
         <p>Score moyen : {{ $scoremoyenne }} / 10</p>
 
