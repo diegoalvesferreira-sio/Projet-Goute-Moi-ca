@@ -42,16 +42,19 @@ Route::get('/visites/{visite}/edit', [VisiteController::class, 'edit'])->name('v
 Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visites.update');
 Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
 
-Route::get('critique/dashboard/{id}', [AuthController::class, 'dashboardCritique']);
-
 Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/register',  [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
+
 Route::middleware('isAdmin')->group(function () {
     Route::get('/admin/dashboard/{id}', [AuthController::class, 'dashboardAdmin']);
     Route::get('/admin/gestion-critiques', [AdminController::class, 'listeCritiques']);
     Route::delete('/admin/gestion-critiques/{id}', [AdminController::class, 'supprimerCritique']);
     Route::patch('/admin/gestion-critiques/{id}/statut', [AdminController::class, 'changerStatut']);
+});
+
+Route::middleware('isCritique')->group(function () {
+    Route::get('/critique/dashboard/{id}', [AuthController::class, 'dashboardCritique']);
 });
