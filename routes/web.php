@@ -9,9 +9,9 @@ Route::get('/', function () {
 
 use App\Http\Controllers\RestaurantsController;
 Route::get('/restaurants', [RestaurantsController::class, 'index']);
-Route::get('/restaurants/ajout', [RestaurantsController::class, 'create']);
+Route::get('/restaurants/ajout', [RestaurantsController::class, 'create'])->name('restaurants.ajout.create');
 Route::post('/restaurants', [RestaurantsController::class, 'store']);
-Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit']);
+Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit'])->name('restaurants.modif.edit');
 Route::put('/restaurants/{id}', [RestaurantsController::class, 'update']);
 Route::delete('/restaurants/{id}', [RestaurantsController::class, 'destroy']);
 
