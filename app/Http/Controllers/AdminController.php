@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Critique;
+
+class AdminController extends Controller
+{
+    // Afficher la liste des critiques
+    public function listeCritiques()
+    {
+        // Vérifier que c'est bien un admin connecté
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/login');
+        }
+
+        $critiques = Critique::all();
+        $user = Auth::guard('admin')->user();
+
+        return view('admin.gestion-critiques', compact('critiques', 'user'));
+    }
+
+    // Supprimer un critique
+    public function supprimerCritique($id)
+    {
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/login');
+        }
+
+        Critique::findOrFail($id)->delete();
+
+        return redirect('/admin/critiques')->with('success', 'Critique supprimé !');
+    }
+}

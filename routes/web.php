@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VisiteController;
 use App\Http\Controllers\RestaurantsController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,3 +51,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/register',  [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/admin/gestion-critiques', [AdminController::class, 'listeCritiques']);
+Route::delete('/admin/gestion-critiques/{id}', [AdminController::class, 'supprimerCritique']);

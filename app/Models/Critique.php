@@ -10,4 +10,10 @@ class Critique extends Authenticatable
 
     protected $fillable = ['nom_utilisateur', 'email', 'mdp', 'statut_id'];
     protected $hidden = ['mdp'];
+
+    // Relation avec la table statut
+    public function statut()
+    {
+        return $this->belongsTo(Statut::class, 'statut_id');
+    }
 }

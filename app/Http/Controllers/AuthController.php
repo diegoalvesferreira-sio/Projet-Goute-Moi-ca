@@ -80,7 +80,7 @@ public function register(Request $request)
         'nom_utilisateur' => $request->nom_utilisateur,
         'email'           => $request->email,
         'mdp'             => Hash::make($request->mdp),
-        'statut_id'       => 1 // affilié par défaut
+        'statut_id'       => 2 // bénévole par défaut
     ]);
 
     // 3. Rediriger vers le login

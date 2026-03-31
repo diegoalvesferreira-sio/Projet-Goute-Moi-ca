@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Statut extends Model
 {
-     protected $fillable = ['libelle'];
-
+    protected $table = 'statut';
+    protected $fillable = ['libelle'];
 }
