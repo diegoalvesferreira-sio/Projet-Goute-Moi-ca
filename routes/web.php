@@ -7,14 +7,14 @@ use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('accueil');
 });
 
 
-Route::get('/restaurants', [RestaurantsController::class, 'index']);
-Route::get('/restaurants/ajout', [RestaurantsController::class, 'create']);
+Route::get('/restaurants', [RestaurantsController::class, 'index'])->name('liste.restaurants');
+Route::get('/restaurants/ajout', [RestaurantsController::class, 'create'])->name('ajout.restaurants');
 Route::post('/restaurants', [RestaurantsController::class, 'store']);
-Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit']);
+Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit'])->name('modif.restaurants');
 Route::put('/restaurants/{id}', [RestaurantsController::class, 'update']);
 Route::delete('/restaurants/{id}', [RestaurantsController::class, 'destroy']);
 
@@ -27,25 +27,11 @@ Route::get('/visites/{visite}/edit', [VisiteController::class, 'edit'])->name('v
 Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visites.update');
 Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
 
-Route::get('/restaurants', [RestaurantsController::class, 'index']);
-Route::get('/restaurants/ajout', [RestaurantsController::class, 'create']);
-Route::post('/restaurants', [RestaurantsController::class, 'store']);
-Route::get('/restaurants/{id}/edit', [RestaurantsController::class, 'edit']);
-Route::put('/restaurants/{id}', [RestaurantsController::class, 'update']);
-Route::delete('/restaurants/{id}', [RestaurantsController::class, 'destroy']);
 
-Route::get('/restaurants/{restaurant}/visites', [VisiteController::class, 'index'])->name('restaurants.visites.index');
-Route::get('/restaurants/{restaurant}/visites/ajouter', [VisiteController::class, 'create'])->name('restaurants.visites.create');
-Route::post('/restaurants/{restaurant}/visites', [VisiteController::class, 'store'])->name('restaurants.visites.store');
-Route::get('/visites/{visite}', [VisiteController::class, 'show'])->name('visites.show');
-Route::get('/visites/{visite}/edit', [VisiteController::class, 'edit'])->name('visites.edit');
-Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visites.update');
-Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
-
-Route::get('/login', [AuthController::class, 'showLogin']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/register',  [AuthController::class, 'showRegister']);
+Route::get('/register',  [AuthController::class, 'showRegister'])->name('inscription');
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('isAdmin')->group(function () {
