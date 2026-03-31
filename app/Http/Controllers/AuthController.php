@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Critique;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -55,6 +57,34 @@ class AuthController extends Controller
 {
     $user = Auth::guard('web')->user();
     return view('critique.dashboard', compact('user'));
+}
+
+// Afficher le formulaire d'inscription
+public function showRegister()
+{
+    return view('register');
+}
+
+// Traiter le formulaire d'inscription
+public function register(Request $request)
+{
+    // 1. Validation des champs
+    $request->validate([
+        'nom_utilisateur' => 'required|string',
+        'email'           => 'required|email|unique:critiques',
+        'mdp'             => 'required|min:6',
+    ]);
+
+    // 2. Créer le critique
+    Critique::create([
+        'nom_utilisateur' => $request->nom_utilisateur,
+        'email'           => $request->email,
+        'mdp'             => Hash::make($request->mdp),
+        'statut_id'       => 1 // affilié par défaut
+    ]);
+
+    // 3. Rediriger vers le login
+    return redirect('/login')->with('success', 'Compte créé avec succès !');
 }
 
     // Déconnexion
