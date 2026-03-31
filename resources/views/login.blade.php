@@ -23,6 +23,8 @@
         <input type="password" name="mdp">
 
         <button type="submit">Se connecter</button>
+        
+        <a href="/register">Pas encore de compte ? S'inscrire</a>
     </form>
 
 </body>
