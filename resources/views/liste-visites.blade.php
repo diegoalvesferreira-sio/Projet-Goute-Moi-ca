@@ -15,6 +15,7 @@
                 <p>Date : {{ $visite->date_visite }}</p>
                 <p>Commentaire : {{ $visite->commentaire }}</p>
                 <a href="{{ route('visites.show', $visite->id) }}">Voir le détail</a>
+                <a href="{{ route('visites.edit', $visite->id) }}">modifier visite</a>
             </div>
             <hr>
         @empty

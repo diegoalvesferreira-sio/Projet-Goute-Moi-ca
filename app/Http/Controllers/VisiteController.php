@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Critere;
@@ -9,52 +8,42 @@ use App\Models\Visite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 class Visitecontroller extends Controller
 {
-     public function criteres()
-    {
-        $criteres = Critere::all(['id', 'libelle']);
-
-        return response()->json([
-            'criteres' => $criteres,
-        ]);
-    }
-    
     public function index(Restaurants $restaurant)
     {
-        $visites = Visite::where('restaurant_id',$restaurant ->id)
-         ->whereNotNull('date_publication')
+        $visites = Visite::where('restaurant_id', $restaurant->id)
+            ->whereNotNull('date_publication')
             ->orderByDesc('date_visite')
             ->get();
 
-            $visiteIds = $visites->pluck('id');
+        $visiteIds = $visites->pluck('id');
         $scoreGlobal = round(Evaluer::whereIn('visite_id', $visiteIds)->avg('note') ?? 0, 2);
 
         $scores = [];
         foreach ($visites as $visite) {
-        $scores[$visite->id] = round(Evaluer::where('visite_id', $visite->id)->avg('note') ?? 0, 2);
+            $scores[$visite->id] = round(Evaluer::where('visite_id', $visite->id)->avg('note') ?? 0, 2);
         }
-            return view('liste-visites', compact('restaurant', 'visites', 'scores', 'scoreGlobal'));
+
+        return view('liste-visites', compact('restaurant', 'visites', 'scores', 'scoreGlobal'));
     }
 
-    
     public function create(Restaurants $restaurant)
     {
         $criteres = Critere::all();
-        return view('ajoutvisite',compact('restaurant','criteres'));
+        return view('ajoutvisite', compact('restaurant', 'criteres'));
     }
 
-   
     public function store(Request $request, Restaurants $restaurant)
     {
-         $request->validate([
+        $request->validate([
             'date_visite' => 'required|date|before_or_equal:today',
             'commentaire' => 'nullable|string|max:1000',
             'notes'       => 'required|array',
-            'notes.*'     => 'required|integer|min:1|max:10'
+            'notes.*'     => 'required|integer|min:1|max:10',
         ]);
+
         DB::transaction(function () use ($request, $restaurant) {
             $visite = Visite::create([
                 'critique_id'      => Auth::guard('web')->id(),
@@ -72,81 +61,66 @@ class Visitecontroller extends Controller
                 ]);
             }
         });
+
         return redirect()->route('restaurants.visites.index', $restaurant);
     }
 
-   
     public function show(Visite $visite)
     {
         $évaluations = Evaluer::where('visite_id', $visite->id)
-        ->get()
-        ->map(function ($eval) {
-            $critere = Critere::find($eval->critere_id);
-            $eval->libelle = $critere->libelle;
-            return $eval;
-        });
+            ->get()
+            ->map(function ($eval) {
+                $critere = Critere::find($eval->critere_id);
+                $eval->libelle = $critere->libelle;
+                return $eval;
+            });
 
         $scoremoyenne = round($évaluations->avg('note') ?? 0, 2);
 
         return view('detail-visite', compact('visite', 'évaluations', 'scoremoyenne'));
     }
 
-    
-    public function edit(string $id)
+    public function edit(Visite $visite)
     {
-         $request->validate([
-            'commentaire' => 'nullable|string|max:3000',
-            'notes'       => 'required|array',
-            'notes.*'     => 'required|integer|min:1|max:10',
-        ]);
+        $criteres    = Critere::all();
+        $evaluations = Evaluer::where('visite_id', $visite->id)->get()->keyBy('critere_id');
 
-        DB::transaction(function () use ($request, $visite) {
-            $visite->update(['commentaire' => $request->commentaire]);
-
-            foreach ($request->notes as $critereId => $note) {
-                Evaluer::updateOrCreate(
-                    ['visite_id' => $visite->id, 'critere_id' => $critereId],
-                    ['note'      => $note]
-                );
-            }
-        });
-
-        return redirect()->route('visites.show', $visite);
+        return view('critique.modifvisite', compact('visite', 'criteres', 'evaluations'));
     }
 
-    
-    public function update(Request $request, string $id)
+    public function update(Request $request, Visite $visite)
     {
         $request->validate([
-            'commentaire' => 'nullable|string|max:3000',
-            'notes'       => 'required|array',
-            'notes.*'     => 'required|integer|min:1|max:10',
+        'commentaire' => 'nullable|string|max:3000',
+        'date_visite' => 'nullable|date',
+        'notes'       => 'nullable|array',
+        'notes.*'     => 'nullable|integer|min:1|max:10',
+    ]);
+
+    DB::transaction(function () use ($request, $visite) {
+        $visite->update([
+            'commentaire' => $request->commentaire,
+            'date_visite' => $request->date_visite ?? $visite->date_visite,
         ]);
 
-        DB::transaction(function () use ($request, $visite) {
-            $visite->update(['commentaire' => $request->commentaire]);
+        foreach ($request->notes ?? [] as $critereId => $note) {
+            Evaluer::updateOrCreate(
+                ['visite_id' => $visite->id, 'critere_id' => $critereId],
+                ['note' => $note]
+            );
+        }
+    });
 
-            foreach ($request->notes as $critereId => $note) {
-                Evaluer::updateOrCreate(
-                    ['visite_id' => $visite->id, 'critere_id' => $critereId],
-                    ['note'      => $note]
-                );
-            }
-        });
-
-        return redirect()->route('visites.show', $visite);
+    return redirect()->route('visites.show', $visite);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Visite $visite)
     {
-         DB::transaction(function () use ($visite) {
+        DB::transaction(function () use ($visite) {
             Evaluer::where('visite_id', $visite->id)->delete();
             $visite->delete();
         });
 
-        return redirect()->route('liste-visites', $visite->restaurant_id);
+        return redirect()->route('restaurants.visites.index', $visite->restaurant_id);
     }
 }
