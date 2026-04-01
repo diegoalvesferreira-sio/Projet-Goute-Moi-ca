@@ -32,6 +32,8 @@
     </form>
 
     <a href="/login">Déjà un compte ? Se connecter</a>
+    <br></br>
+    <a href="{{ route('accueil') }}">retour a l'accueil</a> 
 
 </body>
 </html>

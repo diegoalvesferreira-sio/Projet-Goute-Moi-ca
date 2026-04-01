@@ -19,6 +19,8 @@
                 @auth('web')
                     <a href="{{ route('visites.edit', $visite->id) }}">modifier visite</a>
                 @endauth
+                <br></br>
+                <a href="{{ route('accueil') }}">retour a l'accueil</a> 
             </div>
             <hr>
         @empty
