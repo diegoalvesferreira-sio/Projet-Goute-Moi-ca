@@ -14,6 +14,7 @@
         @csrf
         <button type="submit">Se déconnecter</button>
         <a href="{{ route('liste.restaurants') }}">Voir les Restaurants</a>
+        <a href="/">Accueil</a>
     </form>
 
 </body>

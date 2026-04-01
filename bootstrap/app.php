@@ -11,6 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->redirectGuestsTo('/login');
+    $middleware->redirectUsersTo(function() {
+        if (Auth::guard('admin')->check()) {
+            return '/admin/dashboard/' . Auth::guard('admin')->user()->id;
+        }
+        if (Auth::guard('web')->check()) {
+            return '/critique/dashboard/' . Auth::guard('web')->user()->id;
+        }
+    });
     $middleware->alias([
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         'isCritique' => \App\Http\Middleware\IsCritique::class,

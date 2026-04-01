@@ -15,6 +15,7 @@
         @csrf
         <button type="submit">Se déconnecter</button>
     </form>
+    <a href="/">Accueil</a>
 
 </body>
 </html>

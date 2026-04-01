@@ -89,9 +89,14 @@ public function register(Request $request)
 
     // Déconnexion
     public function logout()
-    {
-        Auth::guard('admin')->logout();
-        Auth::guard('web')->logout();
-        return redirect('/login');
-    }
+{
+    Auth::guard('web')->logout();
+    Auth::guard('admin')->logout();
+    
+    // Invalide la session complètement
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    
+    return redirect('/login');
+}
 }

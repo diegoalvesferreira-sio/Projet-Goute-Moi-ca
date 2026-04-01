@@ -20,12 +20,14 @@ Route::get('/visites/{visite}/edit', [VisiteController::class, 'edit'])->name('v
 Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visites.update');
 Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
 
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+// Si déjà connecté → redirige vers le bon dashboard
+Route::middleware('guest')->group(function(){
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/register',  [AuthController::class, 'showRegister'])->name('inscription');
+    Route::post('/register', [AuthController::class, 'register']);
+});
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/register',  [AuthController::class, 'showRegister'])->name('inscription');
-Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('isAdmin')->group(function () {
     Route::get('/admin/dashboard/{id}', [AuthController::class, 'dashboardAdmin']);
