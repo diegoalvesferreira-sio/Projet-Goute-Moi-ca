@@ -85,7 +85,7 @@ class Visitecontroller extends Controller
         $criteres    = Critere::all();
         $evaluations = Evaluer::where('visite_id', $visite->id)->get()->keyBy('critere_id');
 
-        return view('critique.modifvisite', compact('visite', 'criteres', 'evaluations'));
+        return view('modifvisite', compact('visite', 'criteres', 'evaluations'));
     }
 
     public function update(Request $request, Visite $visite)
