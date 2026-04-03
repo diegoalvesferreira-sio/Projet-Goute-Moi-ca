@@ -19,7 +19,9 @@
             @auth ('admin')
                 <a href="{{ route('modif.restaurants', $restaurant->id) }}">Modifier les informations du restaurant</a>
             @endauth
+            <br></br>
         </div>
+         <a href="{{ route('accueil') }}">retour a l'accueil</a> 
     @endforeach
     <a href="/">Retour à l'accueil</a>
 </body>

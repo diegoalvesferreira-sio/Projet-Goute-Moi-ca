@@ -8,7 +8,7 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('accueil');
-});
+})->name('accueil');
 
 
 Route::get('/restaurants', [RestaurantsController::class, 'index'])->name('liste.restaurants');
