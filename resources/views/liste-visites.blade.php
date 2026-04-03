@@ -15,6 +15,8 @@
                 <p>Score : {{ $scores[$visite->id] }} / 10</p>
                 <p>Date : {{ $visite->date_visite }}</p>
                 <p>Commentaire : {{ $visite->commentaire }}</p>
+                <p>Écrit par : {{ $visite->critique->nom_utilisateur }}</p>
+                <p>Statut : {{ $visite->critique->statut->libelle }}</p>
                 <a href="{{ route('visites.show', $visite->id) }}">Voir le détail</a>
                 @auth('web')
                     <a href="{{ route('visites.edit', $visite->id) }}">modifier visite</a>

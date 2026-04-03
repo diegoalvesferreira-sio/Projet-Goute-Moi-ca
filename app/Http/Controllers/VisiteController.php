@@ -16,6 +16,7 @@ class Visitecontroller extends Controller
         $visites = Visite::where('restaurant_id', $restaurant->id)
             ->whereNotNull('date_publication')
             ->orderByDesc('date_visite')
+            ->with('critique.statut')
             ->get();
 
         $visiteIds = $visites->pluck('id');

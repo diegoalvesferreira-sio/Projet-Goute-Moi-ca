@@ -15,4 +15,9 @@ class Visite extends Model
         'critique_id',
         'restaurant_id'
     ];
+
+    public function critique()
+    {
+        return $this->belongsTo(Critique::class, 'critique_id');
+    }
 }
