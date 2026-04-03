@@ -5,7 +5,7 @@
     <title>Restaurants</title>
 </head>
 <body>
-    <h1>Accueil</h1>
+    <h1>Liste des restaurants</h1>
     @auth ('admin')
         <a href="{{ route('ajout.restaurants') }}">Ajouter un restaurant</a>
     @endauth
@@ -21,5 +21,6 @@
             @endauth
         </div>
     @endforeach
+    <a href="/">Retour à l'accueil</a>
 </body>
 </html>

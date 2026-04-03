@@ -21,9 +21,9 @@ Route::put('/visites/{visite}', [VisiteController::class, 'update'])->name('visi
 Route::delete('/visites/{visite}', [VisiteController::class, 'destroy'])->name('visites.destroy');
 
 // Si déjà connecté → redirige vers le bon dashboard
-Route::middleware('guest')->group(function(){
+Route::middleware('redirectIfAuth')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::get('/register',  [AuthController::class, 'showRegister'])->name('inscription');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('inscription');
     Route::post('/register', [AuthController::class, 'register']);
 });
 Route::post('/login', [AuthController::class, 'login']);
